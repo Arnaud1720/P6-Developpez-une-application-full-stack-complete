@@ -18,8 +18,5 @@ public class Subject {
     private Integer id_subject ;
     @Column(name = "name")
     private String name;
-    @JoinColumn(name = "topic_id")
-    @ManyToOne
-    private Topic topic;
 
 }

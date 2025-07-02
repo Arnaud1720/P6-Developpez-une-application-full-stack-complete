@@ -29,8 +29,6 @@ public class User {
     private String password;
     private LocalDateTime createdAt  = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
-    @OneToMany(mappedBy = "user")
-    private List<Topic> topics;
     @Column(name = "username")
     private String username;
 }

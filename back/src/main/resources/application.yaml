@@ -1,0 +1,24 @@
+app:
+  jwt:
+    secret: "UneClefTresSecreteQuiDoitEtreLongueEtComplexe"
+    accessExpirationMs: 900000      # 15 minutes en millisecondes
+    refreshExpirationMs: 2592000000 # 30 jours en millisecondes
+
+spring:
+  application:
+    name: mdd
+  datasource:
+    url: jdbc:mysql://localhost:3308/mdd_db
+    username: mdd_user
+    password: mdd_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+server:
+  port: 8081

@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserDto {
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "aaaa")
     @Size(min = 2, max = 20, message = "votre prenom doit contenir au moins 2 caractère minimun et 20 caractère maximum")
     private String firstname;
     @Size(min = 2, max = 20, message = "votre nom doit contenir au moins 2 caractère minimun et 20 caractère maximum")
@@ -29,6 +30,8 @@ public class UserDto {
             message = "Le mot de passe doit comporter au moins 6 caractères et inclure au moins un caractère spécial parmi # ? ! | _ &"
     )
     private String password;
+    @NotBlank
+    private String username;
     @PastOrPresent(message = "La date de création doit être dans le passé ou aujourd'hui")
     private LocalDateTime createdAt;
     @PastOrPresent(message = "La date de mise à jour doit être dans le passé ou aujourd'hui")
