@@ -1,0 +1,53 @@
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container-form">
+    <h2>Connexion</h2>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput
+             type="text"
+             formControlName="usernameOrEmail"
+             placeholder="exemple@domaine.com ou monPseudo" />
+      <mat-error *ngIf="loginForm.get('usernameOrEmail')?.hasError('required')">
+        L’email est requis
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('usernameOrEmail')?.hasError('usernameOrEmail')">
+        Format d’email invalide
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mot de passe</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+        placeholder="••••••••"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Basculer visibilité mot de passe'"
+      >
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Le mot de passe est requis
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+        Au moins 6 caractères
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="full-width"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Se connecter
+    </button>
+  </form>
+</div>

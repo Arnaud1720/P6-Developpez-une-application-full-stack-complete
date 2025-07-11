@@ -4,4 +4,49 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 1rem;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.imghomeLogo {
+  /* Toujours garder l’image à l’échelle de son conteneur */
+  display: block;
+  max-width: 100%;
+  height: auto;
+  width: 400px; /* largeur par défaut sur desktop */
+  margin-bottom: 2rem;
+}
+/* --- Responsive pour écrans étroits (smartphone) --- */
+@media (max-width: 600px) {
+  .home-container {
+    /* on empile les boutons verticalement */
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .home-container button {
+    /* pleine largeur (avec un max si besoin) */
+    width: 100%;
+    max-width: 300px;
+  }
+
+}
+
+/* --- Responsive pour tablettes (entre 600px et 900px) --- */
+@media (min-width: 601px) and (max-width: 900px) {
+  .home-container {
+    gap: 1.5rem;
+  }
+  .home-container button {
+    width: auto;
+    padding: 0 2rem;
+  }
+  .imghomeLogo {
+    width: 80%;        /* prend 80% de la largeur du parent */
+    max-width: 250px;  /* mais pas plus grand que 250px */
+  }
 }
