@@ -25,17 +25,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * Permet la connexion soit via username, soit via email.
      */
     @Override
-    public UserDetails loadUserByUsername(String usernameOrEmail)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String usernameOrEmail) {
         User user = userRepository.findByUsername(usernameOrEmail)
                 .or(() -> userRepository.findByEmail(usernameOrEmail))
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                "Utilisateur non trouvé avec username ou email : "
-                                        + usernameOrEmail
-                        ));
-
-        // On renvoie notre propre UserPrincipal, pas le User builder de Spring
+                                "Utilisateur non trouvé avec username ou email : " + usernameOrEmail
+                        )
+                );
         return new UserPrincipal(user);
     }
 }

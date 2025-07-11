@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,11 +19,12 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private Subject subject;
 
-    private Instant subscribedAt;
+    @ManyToOne
+    @JoinColumn(name="subject_id")
+    private Subjects subjects;
+    @Column
+    private LocalDateTime subscribedAt;
 }

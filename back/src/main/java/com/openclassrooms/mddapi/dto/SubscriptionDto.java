@@ -1,18 +1,45 @@
 package com.openclassrooms.mddapi.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscriptionDto {
+
+    @Schema(
+            description = "Identifiant de l'abonnement",
+            example     = "1",
+            accessMode  = Schema.AccessMode.READ_ONLY
+    )
     private Integer id;
-    private int userId;
-    private int subjectid;
-    private Instant subscribedAt;
-    private Instant unsubscribedAt;
+
+    @Schema(
+            description = "ID de l'utilisateur abonné",
+            example     = "1"
+    )
+    private Integer userId;
+
+    @Schema(
+            description = "ID du sujet concerné",
+            example     = "2"
+    )
+    private Integer subjectId;
+
+    @Schema(
+            description = "Horodatage de l'abonnement",
+            example     = "2025-07-01T12:34:56Z"
+    )
+    private LocalDateTime subscribedAt;
+
+    @Schema(
+            description = "Horodatage du désabonnement (null si toujours actif)",
+            example     = "2025-07-15T09:10:11Z"
+    )
+    private LocalDateTime unsubscribedAt;
 }

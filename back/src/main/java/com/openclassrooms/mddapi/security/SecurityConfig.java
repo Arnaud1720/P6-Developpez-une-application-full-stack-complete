@@ -41,12 +41,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // autorise publiquement LOGIN et Swagger UI
                         .requestMatchers(
-                                "/api/auth/**",
+                                "/api/auth/login",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "api/topics/create",
                                 "api/user/save"
-                        ).permitAll()
+                        )
+                        .permitAll()
 
                         // le endpoint profil doit être protégé
                         .requestMatchers("/api/user/me/profile").authenticated()
@@ -54,6 +55,7 @@ public class SecurityConfig {
                         // tout le reste (surtout vos autres API) nécessite un token
                         .anyRequest().authenticated()
                 )
+
                 .addFilterBefore(jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class);
 

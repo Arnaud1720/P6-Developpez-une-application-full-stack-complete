@@ -3,11 +3,11 @@ package com.openclassrooms.mddapi.mapper;
 import com.openclassrooms.mddapi.dto.SubjectDto;
 import org.mapstruct.Mapper;
 
-import javax.security.auth.Subject;
+import com.openclassrooms.mddapi.entity.Subjects;
 
 @Mapper(componentModel = "spring")
 public interface SubjectMapper {
-    SubjectDto toDto(Subject subject);
-    Subject toEntity(SubjectDto subjectDto);
+    SubjectDto toDto(Subjects subject);
+    Subjects toEntity(SubjectDto subjectDto);
 
 }

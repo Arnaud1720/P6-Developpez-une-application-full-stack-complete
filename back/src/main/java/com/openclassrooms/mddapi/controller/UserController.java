@@ -39,7 +39,7 @@ public class UserController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedUser.getId())
+                .buildAndExpand(savedUser.toString())
                 .toUri();
 
         Map<String,Object> body = new HashMap<>();
@@ -89,27 +89,27 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(
-            @CookieValue(name = "refreshToken", required = false) String refreshToken,
-            HttpServletResponse response) {
-
-        // 1️⃣ Supprimer le refresh token de la BDD si présent
-        if (refreshToken != null) {
-            refreshTokenService.findByToken(refreshToken)
-                    .ifPresent(rt -> refreshTokenService.deleteByUser(rt.getUser()));
-        }
-
-        // 2️⃣ Envoyer un cookie vidé pour l’effacer côté client
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
-                .httpOnly(true)
-                .path("/api/auth/refresh")
-                .maxAge(0)
-                .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-        // 3️⃣ Statut 204 No Content
-        return ResponseEntity.noContent().build();
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<Void> logout(
+//            @CookieValue(name = "refreshToken", required = false) String refreshToken,
+//            HttpServletResponse response) {
+//
+//        // 1️⃣ Supprimer le refresh token de la BDD si présent
+//        if (refreshToken != null) {
+//            refreshTokenService.findByToken(refreshToken)
+//                    .ifPresent(rt -> refreshTokenService.deleteByUser(rt.getUser()));
+//        }
+//
+//        // 2️⃣ Envoyer un cookie vidé pour l’effacer côté client
+//        ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+//                .httpOnly(true)
+//                .path("/api/auth/refresh")
+//                .maxAge(0)
+//                .build();
+//        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+//
+//        // 3️⃣ Statut 204 No Content
+//        return ResponseEntity.noContent().build();
+//    }
 
 }
