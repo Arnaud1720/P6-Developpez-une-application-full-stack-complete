@@ -1,0 +1,33 @@
+<header>
+  <div>
+    <img src="./assets/logo_p6.png" alt="icone">
+  </div>
+  <nav class="header-nav" >
+    <a mat-button routerLink="/posts">Articles</a>
+    <a mat-button routerLink="/subjects">Thèmes</a>
+
+    <button *ngIf="api.isLoggedIn()" mat-button (click)="logout()">
+      Se déconnecter
+    </button>
+    <a *ngIf="!api.isLoggedIn()" routerLink="/login">Connexion</a>
+
+    <a
+      *ngIf="!api.isLoggedIn()"
+      mat-button
+      routerLink="/login"
+    >Se connecter</a>
+    <a
+      *ngIf="!api.isLoggedIn()"
+      mat-button
+      routerLink="/register"
+    >S’inscrire</a>
+
+    <button
+      *ngIf="api.isLoggedIn()"
+      mat-icon-button
+      routerLink="/profil"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </nav>
+</header>

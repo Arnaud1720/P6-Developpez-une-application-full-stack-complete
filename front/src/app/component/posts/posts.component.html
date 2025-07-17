@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<mat-progress-spinner
+  *ngIf="loading"
+  mode="indeterminate"
+  class="spinner">
+</mat-progress-spinner>
+
+<div *ngIf="!loading && errorMsg" class="error">
+  {{ errorMsg }}
+</div>
+
+<!-- wrapper qui centre horizontalement la grille -->
+<div *ngIf="!loading && !errorMsg" class="posts-wrapper">
+  <div class="posts-grid">
+    <mat-card *ngFor="let post of posts" class="post-card">
+      <mat-card-header>
+        <mat-card-title>{{ post.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{ post.content }}
+      </mat-card-content>
+      <div class="post-meta">
+        <span>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
+        <span>Auteur {{ post.userId }}</span>
+      </div>
+    </mat-card>
+  </div>
+</div>

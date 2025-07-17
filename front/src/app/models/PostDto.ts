@@ -5,5 +5,5 @@ export interface PostDto {
   createdAt: string;    // ISO date reçue du back
   userId: number;
   subjectId: number;
-
+  authorName: string;
 }

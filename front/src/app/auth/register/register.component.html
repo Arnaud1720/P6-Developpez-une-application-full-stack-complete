@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="container-form">
-    <h2>Incription</h2>
+    <h2>Inscription</h2>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Email</mat-label>
       <input
@@ -11,9 +11,6 @@
       />
       <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
         L’email est requis
-      </mat-error>
-      <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
-        Format d’email invalide
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="full-width">
