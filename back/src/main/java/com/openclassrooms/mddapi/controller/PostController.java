@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -42,5 +43,18 @@ public class PostController {
     ) {
         PostDto dto = postService.getPostBySubjetIdAndPostId(postId, subjectId);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> postDtos = postService.findAll();
+        return postDtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(postDtos);
+    }
+
+    @GetMapping("/orderBy")
+    public List<PostDto> getPosts(
+            @RequestParam(name="asc", defaultValue="false") boolean asc
+    ) {
+        return postService.getPostsOrderByDate(asc);
     }
 }

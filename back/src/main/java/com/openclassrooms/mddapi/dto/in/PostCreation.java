@@ -1,17 +1,10 @@
 package com.openclassrooms.mddapi.dto.in;
 
-import com.openclassrooms.mddapi.dto.SubjectDto;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.security.auth.Subject;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

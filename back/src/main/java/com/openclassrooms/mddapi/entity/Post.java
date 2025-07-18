@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +33,8 @@ public class Post {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = true)
+    @JsonIgnore
     private Subjects subject;
 }

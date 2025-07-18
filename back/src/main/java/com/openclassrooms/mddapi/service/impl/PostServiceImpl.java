@@ -8,17 +8,15 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.entity.Subjects;
 import com.openclassrooms.mddapi.entity.Post;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.security.auth.Subject;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -26,6 +24,7 @@ public class PostServiceImpl implements PostService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
     private final PostMapper postMapper;
+
     public PostServiceImpl(PostRepository postRepository, SubjectRepository subjectRepository, UserRepository userRepository, PostMapper postMapper) {
         this.postRepository = postRepository;
         this.subjectRepository = subjectRepository;
@@ -38,39 +37,28 @@ public class PostServiceImpl implements PostService {
         User author = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
 
-        Subjects subject;
+        Subjects subject = null;
         if (dto.getSubjectId() != null) {
-            // on essaye d’abord de récupérer l’ID s’il a été donné
-            subject = subjectRepository.findById(dto.getSubjectId())
-                    .orElse(null);
-        } else {
-            subject = null;
-        }
-
-        if (subject == null) {
-            // soit l’ID n’a pas été fourni, soit il est invalide → on crée un nouveau sujet
-            if (dto.getSubjectData() == null) {
-                throw new IllegalArgumentException(
-                        "Aucun subjectId valide ni données de sujet fournies"
-                );
-            }
+            subject = subjectRepository.findById(dto.getSubjectId()).orElse(null);
+        } else if (dto.getSubjectData() != null) {
+            // créer un nouveau sujet
             subject = Subjects.builder()
                     .name(dto.getSubjectData().getName())
                     .description(dto.getSubjectData().getDescription())
                     .build();
             subject = subjectRepository.save(subject);
         }
+        // ici subject peut rester null
 
         Post post = Post.builder()
                 .title(dto.getTitle())
-                .createdAt(LocalDateTime.now())
                 .content(dto.getContent())
+                .createdAt(LocalDateTime.now())
                 .author(author)
-                .subject(subject)
+                .subject(subject)   // null autorisé
                 .build();
 
-        Post saved = postRepository.save(post);
-        return postMapper.toDto(saved);
+        return postMapper.toDto(postRepository.save(post));
     }
 
     @Override
@@ -85,4 +73,23 @@ public class PostServiceImpl implements PostService {
                 );
         return postMapper.toDto(post);
     }
+
+    @Override
+    public List<PostDto> findAll() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream().map(postMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostDto> getPostsOrderByDate(boolean asc) {
+        List<Post> posts = asc
+                ? postRepository.findAllByOrderByCreatedAtAsc()
+                : postRepository.findAllByOrderByCreatedAtDesc();
+        return posts.stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }
+
+
+

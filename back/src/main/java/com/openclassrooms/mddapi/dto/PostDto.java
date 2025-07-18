@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class PostDto {
     private String content;
     private LocalDateTime createdAt;
     private int userId;
-    @Schema(description="SubjectUser", example="1")
+    @Schema(description="SubjectUser", example="1",nullable = true)
     private int subjectId;
 
 }

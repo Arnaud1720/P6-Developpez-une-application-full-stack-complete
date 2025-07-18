@@ -82,21 +82,23 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userid)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
-        long subCount = subscriptionRepository.countByUser(user);
+        // 2️⃣ Nombre total d'abonnements
+        long subscriptionsCount = subscriptionRepository.countByUser(user);
+
+        // 3️⃣ Détail des abonnements
         List<Subscription> subs = subscriptionRepository.findAllByUser(user);
+        long subscribedSubjectsCount = subs.size();
         List<SubscriptionDto> subDtos = subs.stream()
                 .map(subscriptionMapper::toDto)
                 .collect(toList());
-
-
 
         return ProfilDto.builder()
                 .id(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())
-                .subscriptionsCount(subCount)
-                .subscribedSubjectsCount(subs.size())
+                .subscriptionsCount(subscriptionsCount)
+                .subscribedSubjectsCount(subscribedSubjectsCount)
                 .subscriptions(subDtos)
                 .build();
     }
