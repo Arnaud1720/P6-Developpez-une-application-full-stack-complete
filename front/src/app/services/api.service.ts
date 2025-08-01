@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {SubjectDto} from "../models/SubjectDto";
 import {UserDto} from "../models/UserDto";
 import {LoginResponse} from "../models/LoginResponse";
 import {PostDto} from "../models/PostDto";
+import {ProfilDto} from "../models/ProfilDto";
+import {SubscriptionDto} from "../models/SubscriptionDto";
 
 
 @Injectable({
@@ -32,6 +34,12 @@ export class ApiService {
     );
   }
 
+  /** Récupère les infos du profil connecté */
+  myProfil(): Observable<ProfilDto> {
+
+    return this.http.get<ProfilDto>(`${this.baseUrl}/user/me/profile`);
+  }
+
   getAllPosts(): Observable<PostDto[]> {
     return this.http.get<PostDto[]>(`${this.baseUrl}/post/all`);
   }
@@ -39,6 +47,13 @@ export class ApiService {
   // ----- User -----
   createUser(user: UserDto): Observable<UserDto> {
     return this.http.post<UserDto>(`${this.baseUrl}/user/save`, user);
+  }
+
+  getPostsOrderBy(asc: boolean): Observable<PostDto[]> {
+    return this.http.get<PostDto[]>(
+      `${this.baseUrl}/post/orderBy`,
+      { params: { asc: String(asc) } }
+    );
   }
 
   createPost(postDto: PostDto): Observable<PostDto> {
@@ -59,6 +74,23 @@ export class ApiService {
   clearToken(): void {
     localStorage.removeItem(this.TOKEN_KEY);
   }
+  updateProfil(dto: UserDto): Observable<UserDto> {
+    return this.http.put<UserDto>(
+      `${this.baseUrl}/user/update/profil`,
+      dto
+    );
+  }
+
+  addSubscription(subscriptionDto: SubscriptionDto): Observable<SubscriptionDto> {
+    return this.http.post<SubscriptionDto>(
+      `${this.baseUrl}/subscriptions/subscribe`,
+      subscriptionDto
+    );
+  }
+  /** Récupère toutes les souscriptions de l'utilisateur courant */
+  getMySubscriptions(): Observable<SubscriptionDto[]> {
+    return this.http.get<SubscriptionDto[]>(`${this.baseUrl}/subscriptions/me`);
+  }
 
   /** Indique si un JWT valide est présent */
   isLoggedIn(): boolean {
@@ -71,5 +103,13 @@ export class ApiService {
     } catch {
       return false;
     }
+  }
+
+  // appel de la fonction subscribe depuis api.service.ts
+  /** Supprime une souscription par son ID */
+  removeSubscription(id: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/subscriptions/${id}`
+    );
   }
 }

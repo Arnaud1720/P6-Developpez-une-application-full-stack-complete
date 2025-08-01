@@ -1,0 +1,23 @@
+.container {
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-form {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.full-width {
+  width: 100%;
+}

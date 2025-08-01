@@ -5,6 +5,7 @@ import {LoginComponent} from "./auth/login/login.component";
 import {RegisterComponent} from "./auth/register/register.component";
 import {ProfilComponent} from "./component/profil/profil.component";
 import {PostsComponent} from "./component/posts/posts.component";
+import {CreatePostComponent} from "./component/create-post/create-post.component";
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'register',   component: RegisterComponent },// /register
   { path: 'profil', component: ProfilComponent },
   { path: 'posts', component: PostsComponent },
+  {path:'add-post',component:CreatePostComponent},
   { path: '**',         redirectTo: '' }               // wildcard
 ];
 @NgModule({

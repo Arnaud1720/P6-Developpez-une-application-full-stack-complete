@@ -1,29 +1,55 @@
 <app-header></app-header>
 
-<mat-progress-spinner
-  *ngIf="loading"
-  mode="indeterminate"
-  class="spinner">
-</mat-progress-spinner>
+<div class="posts-container">
+  <!-- Contrôles existants -->
+  <div class="posts-controls">
+    <button mat-raised-button color="primary" routerLink="/add-post">
+      Créer un article
+    </button>
 
-<div *ngIf="!loading && errorMsg" class="error">
-  {{ errorMsg }}
-</div>
+    <button mat-button (click)="toggleOrder()" class="sort-button">
+      Trier par
+      <mat-icon>{{ asc ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
+    </button>
+  </div>
 
-<!-- wrapper qui centre horizontalement la grille -->
-<div *ngIf="!loading && !errorMsg" class="posts-wrapper">
+  <!-- Grille de posts -->
   <div class="posts-grid">
     <mat-card *ngFor="let post of posts" class="post-card">
       <mat-card-header>
         <mat-card-title>{{ post.title }}</mat-card-title>
       </mat-card-header>
+
       <mat-card-content>
-        {{ post.content }}
+        <p>{{ post.content }}</p>
       </mat-card-content>
-      <div class="post-meta">
+
+      <mat-card-actions class="post-meta">
         <span>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
         <span>Auteur {{ post.userId }}</span>
+      </mat-card-actions>
+
+      <!-- Bouton d’abonnement -->
+      <div class="subscribe-btn">
+        <button mat-stroked-button color="primary"
+                *ngIf="!isSubscribedTo(post)"
+                (click)="subscribeTo(post)">
+          S’abonner
+        </button>
+        <button mat-stroked-button color="warn"
+                *ngIf="isSubscribedTo(post)"
+                (click)="unsubscribeFrom(post)">
+          Se désabonner
+        </button>
       </div>
+
+
     </mat-card>
   </div>
+
+  <mat-progress-spinner *ngIf="loading"
+                        mode="indeterminate"
+                        class="spinner">
+  </mat-progress-spinner>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
 </div>

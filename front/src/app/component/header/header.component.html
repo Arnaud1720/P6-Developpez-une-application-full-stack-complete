@@ -1,10 +1,11 @@
 <header>
+
   <div>
     <img src="./assets/logo_p6.png" alt="icone">
   </div>
   <nav class="header-nav" >
-    <a mat-button routerLink="/posts">Articles</a>
-    <a mat-button routerLink="/subjects">Thèmes</a>
+    <a *ngIf="api.isLoggedIn()" mat-button routerLink="/posts">Articles</a>
+    <a *ngIf="api.isLoggedIn()" mat-button routerLink="/subjects">Thèmes</a>
 
     <button *ngIf="api.isLoggedIn()" mat-button (click)="logout()">
       Se déconnecter

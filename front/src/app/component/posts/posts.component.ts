@@ -1,6 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { PostDto } from '../../models/PostDto';
+import { SubscriptionDto } from '../../models/SubscriptionDto';
+import { ProfilDto } from '../../models/ProfilDto';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -11,33 +14,103 @@ export class PostsComponent implements OnInit {
   posts: PostDto[] = [];
   loading = false;
   errorMsg = '';
-  cols = 2;
+  asc = false;
+  currentUser?: ProfilDto;
+  subscriptions: SubscriptionDto[] = [];
 
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    this.onResize();
-    this.fetchPosts();
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    const w = window.innerWidth;
-    // < 600px → 1 colonne, < 960px → 2, sinon 3
-    this.cols = w < 600 ? 1 : w < 960 ? 2 : 3;
-  }
-
-  fetchPosts() {
     this.loading = true;
-    this.api.getAllPosts().subscribe({
-      next: (data) => {
+    forkJoin({
+      posts: this.api.getPostsOrderBy(this.asc),
+      profile: this.api.myProfil(),
+      subscriptions: this.api.getMySubscriptions()
+    }).subscribe({
+      next: ({ posts, profile, subscriptions }) => {
+        this.posts = posts;
+        this.currentUser = profile;
+        this.subscriptions = subscriptions;
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMsg = 'Impossible de charger les données';
+        this.loading = false;
+      }
+    });
+  }
+
+  toggleOrder() {
+    this.asc = !this.asc;
+    this.refreshPosts();
+  }
+
+  private refreshPosts() {
+    this.loading = true;
+    this.api.getPostsOrderBy(this.asc).subscribe({
+      next: data => {
         this.posts = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: () => {
         this.errorMsg = 'Impossible de charger les articles';
         this.loading = false;
       }
+    });
+  }
+
+  /**
+   * Retourne la subscription correspondante à ce post, ou undefined si non abonné.
+   */
+  isSubscribedTo(post: PostDto): SubscriptionDto | undefined {
+    // ⚠️ ICI on compare bien sub.postId (de la subscription) avec post.id (de l'article affiché)
+    const found = this.subscriptions.find(sub => sub.postId === post.id);
+    // Pour debug :
+    // console.log('post.id', post.id, '| subscriptions:', this.subscriptions, '| found:', found);
+    return found;
+  }
+
+  /**
+   * Abonne l'utilisateur à ce post.
+   */
+  subscribeTo(post: PostDto) {
+    if (!this.currentUser) return;
+    const dto: SubscriptionDto = {
+      userId: this.currentUser.id,
+      postId: post.id,         // ⚠️ le champ important pour le matching
+      id: undefined,
+      subscribedAt: undefined,
+      unsubscribedAt: undefined
+    };
+    this.api.addSubscription(dto).subscribe({
+      next: () => this.reloadSubscriptions(),  // Recharge la liste pour synchro instantanée
+      error: err => {
+        console.error('Erreur abonnement', err);
+      }
+    });
+  }
+
+  /**
+   * Désabonne l'utilisateur de ce post.
+   */
+  unsubscribeFrom(post: PostDto): void {
+    const sub = this.isSubscribedTo(post);
+    if (!sub || typeof sub.id !== "number") return;
+    this.api.removeSubscription(sub.id).subscribe({
+      next: () => this.reloadSubscriptions(), // Recharge la liste pour synchro instantanée
+      error: err => {
+        console.error('Erreur désabonnement', err);
+      }
+    });
+  }
+
+  /**
+   * Recharge toutes les subscriptions (pour forcer la synchro bouton)
+   */
+  reloadSubscriptions() {
+    this.api.getMySubscriptions().subscribe(subs => {
+      this.subscriptions = subs;
+      // console.log('Subscriptions à jour :', subs);
     });
   }
 }

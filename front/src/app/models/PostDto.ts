@@ -6,4 +6,5 @@ export interface PostDto {
   userId: number;
   subjectId: number;
   authorName: string;
+  postId?:number
 }

@@ -4,6 +4,7 @@ import {ApiService} from "../../services/api.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
+import {MatToolbarModule} from "@angular/material/toolbar";
 @Component({
   selector: "app-header",
   standalone: true,
@@ -13,11 +14,13 @@ import {NgIf} from "@angular/common";
     RouterLinkWithHref,
     RouterLink,
     MatIconModule,
-    NgIf
+    NgIf,
+    MatToolbarModule
   ],
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent{
+
   constructor(
     public api:ApiService,  // ‹ public › pour le template
     private router: Router
