@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -18,40 +19,43 @@ import java.net.URI;
 public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
-    /**
-     * Crée une nouvelle souscription pour un userId / subjectId donnés.
-     * Ex :
-     * POST /api/subscriptions
-     * {
-     *   "userId": 1,
-     *   "subjectId": 42
-     * }
-     */
+
     @PostMapping("/subscribe")
     public ResponseEntity<SubscriptionDto> addSubscription(
-            @Valid @RequestBody SubscriptionDto dto
+            @Valid @RequestBody SubscriptionDto dto,
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
+        // Force l'userId à celui du principal (sécurité)
+        dto.setUserId(principal.getUser().getId());
+
         SubscriptionDto created = subscriptionService.addSubscription(dto);
 
-        // Construit l'URI : /api/subscriptions/{id}
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
 
-        return ResponseEntity
-                .created(location)
-                .body(created);
+        return ResponseEntity.created(location).body(created);
     }
 
-    @DeleteMapping("/{subjectId}/unsebscribe")
-    public ResponseEntity<Void> unsubscribe(
-            @AuthenticationPrincipal UserPrincipal principal,
-            @PathVariable Integer subjectId
+    /**
+     * DELETE /api/subscriptions/{id}
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeSubscription(
+            @PathVariable Integer id
+    ) {
+        subscriptionService.removeSubscription(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<SubscriptionDto>> getMySubscriptions(
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
         Integer userId = principal.getUser().getId();
-        subscriptionService.deleteByUserAndSubject(userId, subjectId);
-        return ResponseEntity.noContent().build();
+        List<SubscriptionDto> subscriptions = subscriptionService.findByUserId(userId);
+        return ResponseEntity.ok(subscriptions);
     }
 }

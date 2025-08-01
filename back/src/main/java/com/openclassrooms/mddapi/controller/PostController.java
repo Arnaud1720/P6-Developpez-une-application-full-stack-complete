@@ -36,14 +36,6 @@ public class PostController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @GetMapping("/subjects/{subjectId}/posts/{postId}")
-    public ResponseEntity<PostDto> getPost(
-            @PathVariable Integer subjectId,
-            @PathVariable Integer postId
-    ) {
-        PostDto dto = postService.getPostBySubjetIdAndPostId(postId, subjectId);
-        return ResponseEntity.ok(dto);
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<PostDto>> getAllPosts() {

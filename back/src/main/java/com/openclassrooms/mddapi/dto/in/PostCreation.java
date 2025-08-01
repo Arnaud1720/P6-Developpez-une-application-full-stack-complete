@@ -23,10 +23,10 @@ public class PostCreation {
      */
     private Integer subjectId;
 
-    /**
-     * Données du sujet à créer si `subjectId` vaut null ou introuvable.
-     * Peut contenir uniquement le nom (et éventuellement description).
-     */
-    @Valid
-    private SubjectDataDto subjectData;
+//    /**
+//     * Données du sujet à créer si `subjectId` vaut null ou introuvable.
+//     * Peut contenir uniquement le nom (et éventuellement description).
+//     */
+//    @Valid
+//    private SubjectDataDto subjectData;
 }

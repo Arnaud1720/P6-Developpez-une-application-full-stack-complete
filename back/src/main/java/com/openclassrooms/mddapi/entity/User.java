@@ -29,6 +29,6 @@ public class User {
     private String password;
     private LocalDateTime createdAt  = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
-    @Column(name = "username")
+    @Column(name = "username",nullable = true)
     private String username;
 }

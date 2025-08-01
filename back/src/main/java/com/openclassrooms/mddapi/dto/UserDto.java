@@ -50,10 +50,6 @@ public class UserDto {
     )
     private String password;
 
-    @Schema(description = "Nom d'utilisateur pour la connexion", example = "alice123")
-    @NotBlank(message = "Le nom d'utilisateur est obligatoire")
-    private String username;
-
     @Schema(description = "Date de création", example = "2025-06-30T10:22:33.608555",
             accessMode = Schema.AccessMode.READ_ONLY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -65,5 +61,7 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @PastOrPresent(message = "La date de mise à jour doit être dans le passé ou aujourd'hui")
     private LocalDateTime updatedAt;
-
+    @Schema(description = "pseudo", example = "Arnaud1720")
+    @NotBlank(message = "pseudo est obligatoire")
+    private String username;
 }

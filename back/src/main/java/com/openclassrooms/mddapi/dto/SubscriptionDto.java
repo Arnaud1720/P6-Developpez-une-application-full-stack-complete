@@ -26,10 +26,10 @@ public class SubscriptionDto {
     private Integer userId;
 
     @Schema(
-            description = "ID du sujet concerné",
-            example     = "2"
+            description = "ID du post (article) concerné",
+            example     = "42"
     )
-    private Integer subjectId;
+    private Integer postId;  // <-- AJOUTE cette ligne
 
     @Schema(
             description = "Horodatage de l'abonnement",

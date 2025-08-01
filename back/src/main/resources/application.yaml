@@ -22,3 +22,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
 server:
   port: 8081
+logging:
+  level:
+    org.springframework.security: DEBUG

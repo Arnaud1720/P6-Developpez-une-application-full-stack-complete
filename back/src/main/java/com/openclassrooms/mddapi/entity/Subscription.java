@@ -21,10 +21,9 @@ public class Subscription {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-
     @ManyToOne
-    @JoinColumn(name="subject_id")
-    private Subjects subjects;
+    @JoinColumn(name = "post_id")
+    private Post post;
     @Column
     private LocalDateTime subscribedAt;
 }

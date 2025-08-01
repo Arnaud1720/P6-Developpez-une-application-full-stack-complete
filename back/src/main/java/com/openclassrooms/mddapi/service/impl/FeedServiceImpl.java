@@ -22,13 +22,4 @@ public class FeedServiceImpl implements FeedService {
     }
 
 
-    @Override
-    public List<PostDto> getFeed(Integer userId, boolean asc) {
-        Sort sort = Sort.by("createdAt");
-        sort = asc ? sort.ascending() : sort.descending();
-        return postRepo.findFeedByUser(userId, sort)
-                .stream()
-                .map(postMapper::toDto)
-                .toList();
-    }
 }

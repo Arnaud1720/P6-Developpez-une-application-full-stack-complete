@@ -30,11 +30,7 @@ public class Post {
 
     // Auteur de l’article
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private User author;
+    @JoinColumn(name = "user_id")
+    private User userid;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", nullable = true)
-    @JsonIgnore
-    private Subjects subject;
 }

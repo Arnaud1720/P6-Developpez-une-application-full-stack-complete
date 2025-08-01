@@ -13,4 +13,5 @@ public interface UserService {
     UserDto findByEmail(String email);
     List<UserDto> findAll();
     ProfilDto getMyProfile(Integer userid) throws ChangeSetPersister.NotFoundException;
+    UserDto updateProfile(Integer userid, UserDto userDto);
 }

@@ -66,18 +66,19 @@ public class UserController {
     public ResponseEntity<UserDto> updateProfil(
             @Valid @RequestBody UserDto incomingDto
     ) {
-        // Récupère l’ID du principal pour éviter toute modification d’un autre user
-        UserPrincipal principal =
-                (UserPrincipal) SecurityContextHolder.getContext()
+        // 1. Récupère l’ID du principal
+        UserPrincipal principal = (UserPrincipal)
+                SecurityContextHolder.getContext()
                         .getAuthentication()
                         .getPrincipal();
         Integer myId = principal.getUser().getId();
 
-        // On force l’ID dans le DTO avant de passer au service
+        // 2. Force l’ID sur le DTO
         incomingDto.setId(myId);
 
-        // Appelle ton service qui fera le findById + save
-        UserDto updated = userService.save(incomingDto);
+        // 3. Appelle la bonne signature updateProfile(userId, dto)
+        UserDto updated = userService.updateProfile(myId, incomingDto);
+
         return ResponseEntity.ok(updated);
     }
 

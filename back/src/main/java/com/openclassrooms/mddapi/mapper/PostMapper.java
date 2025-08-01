@@ -7,11 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
-    @Mapping(target = "userId",    source = "author.id")
-    @Mapping(target = "subjectId", source = "subject.id")
+    @Mapping(target = "userId", source = "userid.id")
     PostDto toDto(Post post);
 
-    @Mapping(target = "author.id",    source = "userId")
-    @Mapping(target = "subject.id",   source = "subjectId")
+    @Mapping(target = "userid.id",    source = "userId")
     Post toEntity(PostDto dto);
 }

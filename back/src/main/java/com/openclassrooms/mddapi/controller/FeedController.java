@@ -23,12 +23,5 @@ public class FeedController {
         this.feedService = feedService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<PostDto>> getFeed(
-            @AuthenticationPrincipal UserPrincipal principal,
-            @RequestParam(defaultValue = "false") boolean asc
-    ) {
-        List<PostDto> feed = feedService.getFeed(principal.getUser().getId(), asc);
-        return ResponseEntity.ok(feed);
-    }
+
 }
