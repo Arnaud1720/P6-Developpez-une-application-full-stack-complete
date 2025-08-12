@@ -15,7 +15,13 @@
 
   <!-- Grille de posts -->
   <div class="posts-grid">
-    <mat-card *ngFor="let post of posts" class="post-card">
+    <mat-card
+      *ngFor="let post of posts"
+      class="post-card"
+      [routerLink]="['/posts', post.id]"
+      tabindex="0"
+      role="link"
+    >
       <mat-card-header>
         <mat-card-title>{{ post.title }}</mat-card-title>
       </mat-card-header>
@@ -24,32 +30,38 @@
         <p>{{ post.content }}</p>
       </mat-card-content>
 
-      <mat-card-actions class="post-meta">
+      <mat-card-actions class="post-meta" (click)="$event.stopPropagation()">
         <span>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
         <span>Auteur {{ post.userId }}</span>
       </mat-card-actions>
 
       <!-- Bouton d’abonnement -->
-      <div class="subscribe-btn">
-        <button mat-stroked-button color="primary"
-                *ngIf="!isSubscribedTo(post)"
-                (click)="subscribeTo(post)">
+      <div class="subscribe-btn" (click)="$event.stopPropagation()">
+        <button
+          mat-stroked-button
+          color="primary"
+          *ngIf="!isSubscribedTo(post)"
+          (click)="subscribeTo(post)"
+        >
           S’abonner
         </button>
-        <button mat-stroked-button color="warn"
-                *ngIf="isSubscribedTo(post)"
-                (click)="unsubscribeFrom(post)">
+        <button
+          mat-stroked-button
+          color="warn"
+          *ngIf="isSubscribedTo(post)"
+          (click)="unsubscribeFrom(post)"
+        >
           Se désabonner
         </button>
       </div>
-
-
     </mat-card>
   </div>
 
-  <mat-progress-spinner *ngIf="loading"
-                        mode="indeterminate"
-                        class="spinner">
+  <mat-progress-spinner
+    *ngIf="loading"
+    mode="indeterminate"
+    class="spinner">
   </mat-progress-spinner>
+
   <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
 </div>

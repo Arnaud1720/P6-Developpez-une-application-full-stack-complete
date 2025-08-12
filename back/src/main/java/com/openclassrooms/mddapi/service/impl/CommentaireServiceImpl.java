@@ -14,6 +14,7 @@ import com.openclassrooms.mddapi.entity.User;
 import org.springframework.web.server.ResponseStatusException;
 import com.openclassrooms.mddapi.entity.Commentaire;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,7 @@ public class CommentaireServiceImpl  implements CommentaireService {
     }
     @Override
     public CommentaireDto createComment(Integer postId, Integer userId, String contenu) {
+        LocalDateTime date = LocalDateTime.now();
         Post post = postRepo.findById(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post introuvable"));
 
@@ -41,6 +43,7 @@ public class CommentaireServiceImpl  implements CommentaireService {
         Commentaire com = Commentaire.builder()
                 .contenu(contenu)
                 .post(post)
+                .createdAt(date)
                 .auteur(auteur)
                 .build();
 

@@ -26,6 +26,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {PostDetailComponent} from "./component/post-detail/post-detail.component";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatIconModule,
     MatButtonModule,
     MatListModule,
+    PostDetailComponent,
 
   ],
   providers: [

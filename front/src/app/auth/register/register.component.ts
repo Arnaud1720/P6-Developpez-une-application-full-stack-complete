@@ -13,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class RegisterComponent implements OnInit {
    registerForm!: FormGroup;
    hide = true;
-
+    errorMessage='';
   constructor(  private api: ApiService,
                 private router: Router,
                 private snackBar: MatSnackBar,
@@ -42,11 +42,11 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       error: err => {
-        console.error('Erreur à la création :', err);
-        this.snackBar.open(err.error?.message || 'Erreur lors de l’inscription', 'Fermer', {
-          duration: 2000
-        });
+        // On prend le message du back si dispo, sinon message générique
+        const msg = err.error?.message || 'Erreur lors de l’inscription';
+        this.snackBar.open(msg, 'Fermer', { duration: 3000 });
       }
+
     });
   }
 }

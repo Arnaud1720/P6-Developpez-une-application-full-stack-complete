@@ -49,4 +49,9 @@ public class PostController {
     ) {
         return postService.getPostsOrderByDate(asc);
     }
+
+    @GetMapping("/{id}")
+    public PostDto getById(@PathVariable Integer id) {
+        return postService.findById(id);
+    }
 }

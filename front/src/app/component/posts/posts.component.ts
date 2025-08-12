@@ -77,7 +77,7 @@ export class PostsComponent implements OnInit {
     if (!this.currentUser) return;
     const dto: SubscriptionDto = {
       userId: this.currentUser.id,
-      postId: post.id,         // ⚠️ le champ important pour le matching
+      postId: post.id,
       id: undefined,
       subscribedAt: undefined,
       unsubscribedAt: undefined

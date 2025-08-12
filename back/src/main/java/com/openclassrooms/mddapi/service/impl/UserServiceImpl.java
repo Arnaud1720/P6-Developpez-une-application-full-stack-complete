@@ -55,6 +55,9 @@ public class UserServiceImpl implements UserService {
             entity.setUpdateAt(now);
             entity.setUsername(userDto.getUsername());
         }
+        boolean exists = userRepository.findByEmail(entity.getEmail()).isPresent();
+        if (exists) {
+        }
         entity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         User saved = userRepository.save(entity);
         return userMapper.toDto(saved);
@@ -86,11 +89,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userid)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
-        // 2️⃣ Nombre total d'abonnements
         long subscriptionsCount = subscriptionRepository.countByUser(user);
         long topicsCreatedCount      = postRepository.countByUserid(user);
         // nom de post crée
-        // 3️⃣ Détail des abonnements
         List<Subscription> subs = subscriptionRepository.findAllByUser(user);
         long subscribedSubjectsCount = subs.size();
         List<SubscriptionDto> subDtos = subs.stream()
@@ -111,11 +112,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateProfile(Integer userId, UserDto userDto) {
-        // 1️⃣ Récupère l’entité existante
         User existing = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
 
-        // 2️⃣ Met à jour les champs autorisés
         if (userDto.getEmail() != null && !userDto.getEmail().isBlank()) {
             existing.setEmail(userDto.getEmail());
         }
@@ -123,9 +122,7 @@ public class UserServiceImpl implements UserService {
             // encoder le nouveau mot de passe
             existing.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         }
-        // (tu peux ajouter d’autres champs de profil ici)
 
-        // 3️⃣ Sauvegarde et mappe vers le DTO de sortie
         User saved = userRepository.save(existing);
         return userMapper.toDto(saved);
     }

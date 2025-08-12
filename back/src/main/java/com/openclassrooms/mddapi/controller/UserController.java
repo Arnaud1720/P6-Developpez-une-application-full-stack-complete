@@ -2,15 +2,10 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.ProfilDto;
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.entity.RefreshToken;
-import com.openclassrooms.mddapi.service.RefreshTokenService;
 import com.openclassrooms.mddapi.service.UserService;
 import com.openclassrooms.mddapi.service.impl.UserPrincipal;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,10 +22,8 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final RefreshTokenService refreshTokenService;
-    public UserController(UserService userService, RefreshTokenService refreshTokenService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.refreshTokenService = refreshTokenService;
     }
 
     @PostMapping("/save")

@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")
+@RequestMapping("/api/post/{postId}/comments")
 public class CommentaireController {
 
     private final CommentaireService service;

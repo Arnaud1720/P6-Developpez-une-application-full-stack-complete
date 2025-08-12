@@ -9,4 +9,6 @@ public interface PostService {
     PostDto create(PostCreation dto, Integer userId);
     List<PostDto> findAll();
     List<PostDto> getPostsOrderByDate(boolean asc);
+    PostDto findById(Integer id);
+
 }

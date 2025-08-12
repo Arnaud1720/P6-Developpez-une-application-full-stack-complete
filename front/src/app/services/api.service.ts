@@ -7,6 +7,7 @@ import {LoginResponse} from "../models/LoginResponse";
 import {PostDto} from "../models/PostDto";
 import {ProfilDto} from "../models/ProfilDto";
 import {SubscriptionDto} from "../models/SubscriptionDto";
+import {CommentaireDto} from "../models/CommentaireDto";
 
 
 @Injectable({
@@ -110,6 +111,23 @@ export class ApiService {
   removeSubscription(id: number): Observable<void> {
     return this.http.delete<void>(
       `${this.baseUrl}/subscriptions/${id}`
+    );
+  }
+
+  getPost(id: number) {
+    return this.http.get<PostDto>(`${this.baseUrl}/post/${id}`); // <-- baseUrl
+  }
+
+  getComments(postId: number) {
+    return this.http.get<CommentaireDto[]>(
+      `${this.baseUrl}/post/${postId}/comments`   // <-- baseUrl + singulier
+    );
+  }
+
+  addComment(postId: number, contenu: string) {
+    return this.http.post<CommentaireDto>(
+      `${this.baseUrl}/post/${postId}/comments`,  // <-- baseUrl + singulier
+      { contenu }
     );
   }
 }

@@ -75,6 +75,12 @@ public class PostServiceImpl implements PostService {
                 .map(postMapper::toDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public PostDto findById(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post introuvable"));
+        return postMapper.toDto(post);
+    }
 }
 
 
