@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
         }
         boolean exists = userRepository.findByEmail(entity.getEmail()).isPresent();
         if (exists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
         }
         entity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         User saved = userRepository.save(entity);

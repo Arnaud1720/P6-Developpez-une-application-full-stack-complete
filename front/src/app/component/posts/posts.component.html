@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 <div class="posts-container">
   <!-- Contrôles existants -->
   <div class="posts-controls">
@@ -13,7 +12,6 @@
     </button>
   </div>
 
-  <!-- Grille de posts -->
   <div class="posts-grid">
     <mat-card
       *ngFor="let post of posts"
@@ -35,25 +33,24 @@
         <span>Auteur {{ post.userId }}</span>
       </mat-card-actions>
 
-      <!-- Bouton d’abonnement -->
-      <div class="subscribe-btn" (click)="$event.stopPropagation()">
-        <button
-          mat-stroked-button
-          color="primary"
-          *ngIf="!isSubscribedTo(post)"
-          (click)="subscribeTo(post)"
-        >
-          S’abonner
-        </button>
-        <button
-          mat-stroked-button
-          color="warn"
-          *ngIf="isSubscribedTo(post)"
-          (click)="unsubscribeFrom(post)"
-        >
-          Se désabonner
-        </button>
-      </div>
+<!--      <div class="subscribe-btn" (click)="$event.stopPropagation()">-->
+<!--        <button-->
+<!--          mat-stroked-button-->
+<!--          color="primary"-->
+<!--          *ngIf="!isSubscribedTo(post)"-->
+<!--          (click)="subscribeTo(post)"-->
+<!--        >-->
+<!--          S’abonner-->
+<!--        </button>-->
+<!--        <button-->
+<!--          mat-stroked-button-->
+<!--          color="warn"-->
+<!--          *ngIf="isSubscribedTo(post)"-->
+<!--          (click)="unsubscribeFrom(post)"-->
+<!--        >-->
+<!--          Se désabonner-->
+<!--        </button>-->
+<!--      </div>-->
     </mat-card>
   </div>
 

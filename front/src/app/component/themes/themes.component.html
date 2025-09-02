@@ -1,0 +1,63 @@
+<!-- src/app/themes/themes.component.html -->
+<app-header></app-header>
+
+<div class="posts-container" *ngIf="!loading; else loadingTpl">
+  <div class="posts-controls">
+    <button mat-button (click)="toggleOrder()" class="sort-button" aria-label="Trier les thèmes">
+      Trier par titre
+      <mat-icon>{{ asc ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
+    </button>
+  </div>
+
+  <div class="posts-grid">
+    <mat-card
+      *ngFor="let theme of themes; trackBy: trackByThemeId"
+      class="post-card"
+      [routerLink]="['/theme', theme.id]"
+      tabindex="0"
+      role="link"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ theme.title }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ theme.content || 'Aucun contenu.' }}</p>
+      </mat-card-content>
+
+      <mat-card-actions class="post-meta" (click)="$event.stopPropagation()">
+      </mat-card-actions>
+
+      <div class="subscribe-btn" (click)="$event.stopPropagation()">
+        <button
+          mat-stroked-button
+          color="primary"
+          *ngIf="!isSubscribedTo(theme)"
+          (click)="subscribeTo(theme)"
+          [disabled]="busyThemeIds.has(theme.id)">
+          S’abonner
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          *ngIf="isSubscribedTo(theme)"
+          (click)="unsubscribeFrom(theme)"
+          [disabled]="busyThemeIds.has(theme.id)">
+          Se désabonner
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!themes?.length && !errorMsg" class="empty">
+    Aucun thème pour le moment.
+  </div>
+
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    <mat-progress-spinner mode="indeterminate" class="spinner"></mat-progress-spinner>
+  </div>
+</ng-template>

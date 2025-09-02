@@ -65,4 +65,5 @@ public class ProfilDto {
     )
     private List<SubscriptionDto> subscriptions;
 
+
 }

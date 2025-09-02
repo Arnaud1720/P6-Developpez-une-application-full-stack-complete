@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.entity;
 
+import com.openclassrooms.mddapi.dto.ThemeDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +19,17 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name="user_id")
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
-    @Column
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "theme_id", nullable = false)
+    private Theme theme;
+
+    @Column(nullable = false)
     private LocalDateTime subscribedAt;
+
+    private LocalDateTime unsubscribedAt;
 }

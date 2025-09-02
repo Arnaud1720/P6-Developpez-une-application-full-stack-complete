@@ -62,13 +62,7 @@ export class PostsComponent implements OnInit {
   /**
    * Retourne la subscription correspondante à ce post, ou undefined si non abonné.
    */
-  isSubscribedTo(post: PostDto): SubscriptionDto | undefined {
-    // ⚠️ ICI on compare bien sub.postId (de la subscription) avec post.id (de l'article affiché)
-    const found = this.subscriptions.find(sub => sub.postId === post.id);
-    // Pour debug :
-    // console.log('post.id', post.id, '| subscriptions:', this.subscriptions, '| found:', found);
-    return found;
-  }
+
 
   /**
    * Abonne l'utilisateur à ce post.
@@ -77,7 +71,6 @@ export class PostsComponent implements OnInit {
     if (!this.currentUser) return;
     const dto: SubscriptionDto = {
       userId: this.currentUser.id,
-      postId: post.id,
       id: undefined,
       subscribedAt: undefined,
       unsubscribedAt: undefined
@@ -90,19 +83,6 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  /**
-   * Désabonne l'utilisateur de ce post.
-   */
-  unsubscribeFrom(post: PostDto): void {
-    const sub = this.isSubscribedTo(post);
-    if (!sub || typeof sub.id !== "number") return;
-    this.api.removeSubscription(sub.id).subscribe({
-      next: () => this.reloadSubscriptions(), // Recharge la liste pour synchro instantanée
-      error: err => {
-        console.error('Erreur désabonnement', err);
-      }
-    });
-  }
 
   /**
    * Recharge toutes les subscriptions (pour forcer la synchro bouton)

@@ -9,11 +9,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SubscriptionMapper {
 
-    // Mapping entity -> DTO (récupère l'id du post)
-    @Mapping(target = "postId", source = "post.id")
-    @Mapping(target = "userId", source = "user.id")
+    // entity -> dto
+    @Mapping(target = "userId",  source = "user.id")
+    @Mapping(target = "themeId", source = "theme.id")
     SubscriptionDto toDto(Subscription subscription);
 
-    // Mapping DTO -> entity (tu peux laisser comme ça pour l’instant, voir plus bas)
-    Subscription toEntity(SubscriptionDto subscriptionDto);
+    @Mapping(target = "user",  ignore = true)
+    @Mapping(target = "theme", ignore = true)
+    Subscription toEntity(SubscriptionDto dto);
+
 }

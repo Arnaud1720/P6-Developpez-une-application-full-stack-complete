@@ -27,6 +27,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {PostDetailComponent} from "./component/post-detail/post-detail.component";
+import { ArticlesComponent } from './component/articles/articles.component';
+import { ThemesComponent } from './component/themes/themes.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {PostDetailComponent} from "./component/post-detail/post-detail.component
     RegisterComponent,
     ProfilComponent,
     PostsComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    ArticlesComponent,
+    ThemesComponent
   ],
   imports: [
     BrowserModule,            // inclut CommonModule

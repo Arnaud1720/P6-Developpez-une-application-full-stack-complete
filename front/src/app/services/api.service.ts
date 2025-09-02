@@ -8,6 +8,7 @@ import {PostDto} from "../models/PostDto";
 import {ProfilDto} from "../models/ProfilDto";
 import {SubscriptionDto} from "../models/SubscriptionDto";
 import {CommentaireDto} from "../models/CommentaireDto";
+import {ThemeDto} from "../models/ThemeDto";
 
 
 @Injectable({
@@ -43,6 +44,10 @@ export class ApiService {
 
   getAllPosts(): Observable<PostDto[]> {
     return this.http.get<PostDto[]>(`${this.baseUrl}/post/all`);
+  }
+
+  getAllThemes(): Observable<ThemeDto[]> {
+    return this.http.get<ThemeDto[]>(`${this.baseUrl}/theme/all`);
   }
 
   // ----- User -----
@@ -88,10 +93,10 @@ export class ApiService {
       subscriptionDto
     );
   }
-  /** Récupère toutes les souscriptions de l'utilisateur courant */
-  getMySubscriptions(): Observable<SubscriptionDto[]> {
-    return this.http.get<SubscriptionDto[]>(`${this.baseUrl}/subscriptions/me`);
-  }
+  // /** Récupère toutes les souscriptions de l'utilisateur courant */
+  // getMySubscriptions(): Observable<SubscriptionDto[]> {
+  //   return this.http.get<SubscriptionDto[]>(`${this.baseUrl}/subscriptions/me`);
+  // }
 
   /** Indique si un JWT valide est présent */
   isLoggedIn(): boolean {
@@ -106,13 +111,13 @@ export class ApiService {
     }
   }
 
-  // appel de la fonction subscribe depuis api.service.ts
-  /** Supprime une souscription par son ID */
-  removeSubscription(id: number): Observable<void> {
-    return this.http.delete<void>(
-      `${this.baseUrl}/subscriptions/${id}`
-    );
-  }
+  // // appel de la fonction subscribe depuis api.service.ts
+  // /** Supprime une souscription par son ID */
+  // removeSubscription(id: number): Observable<void> {
+  //   return this.http.delete<void>(
+  //     `${this.baseUrl}/subscriptions/${id}`
+  //   );
+  // }
 
   getPost(id: number) {
     return this.http.get<PostDto>(`${this.baseUrl}/post/${id}`); // <-- baseUrl
@@ -120,14 +125,32 @@ export class ApiService {
 
   getComments(postId: number) {
     return this.http.get<CommentaireDto[]>(
-      `${this.baseUrl}/post/${postId}/comments`   // <-- baseUrl + singulier
+      `${this.baseUrl}/post/${postId}/comments`
     );
   }
 
   addComment(postId: number, contenu: string) {
     return this.http.post<CommentaireDto>(
-      `${this.baseUrl}/post/${postId}/comments`,  // <-- baseUrl + singulier
+      `${this.baseUrl}/post/${postId}/comments`,
       { contenu }
     );
   }
+
+
+
+  addThemeSubscription(themeId: number) {
+    return this.http.post<SubscriptionDto>(`${this.baseUrl}/subscriptions/subscribe`, {
+      themeId,  // <--- IMPORTANT
+    });
+  }
+
+  removeSubscription(subscriptionId: number) {
+    return this.http.delete<void>(`${this.baseUrl}/subscriptions/${subscriptionId}`);
+  }
+
+  getMySubscriptions() {
+    return this.http.get<SubscriptionDto[]>(`${this.baseUrl}/subscriptions/me`);
+  }
+
+
 }

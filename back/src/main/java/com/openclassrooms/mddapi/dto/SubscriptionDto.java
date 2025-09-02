@@ -12,34 +12,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SubscriptionDto {
 
-    @Schema(
-            description = "Identifiant de l'abonnement",
-            example     = "1",
-            accessMode  = Schema.AccessMode.READ_ONLY
-    )
+
+    @Schema(description = "Identifiant de l'abonnement", example = "1",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
 
-    @Schema(
-            description = "ID de l'utilisateur abonné",
-            example     = "1"
-    )
+    @Schema(description = "ID de l'utilisateur abonné", example = "1")
     private Integer userId;
 
-    @Schema(
-            description = "ID du post (article) concerné",
-            example     = "42"
-    )
-    private Integer postId;  // <-- AJOUTE cette ligne
+    @Schema(description = "ID du thème concerné", example = "42")
+    private Integer themeId;
 
-    @Schema(
-            description = "Horodatage de l'abonnement",
-            example     = "2025-07-01T12:34:56Z"
-    )
+    @Schema(description = "Horodatage de l'abonnement")
     private LocalDateTime subscribedAt;
 
-    @Schema(
-            description = "Horodatage du désabonnement (null si toujours actif)",
-            example     = "2025-07-15T09:10:11Z"
-    )
+    @Schema(description = "Horodatage du désabonnement (null si toujours actif)")
     private LocalDateTime unsubscribedAt;
 }

@@ -1,34 +1,82 @@
 <header>
-
-  <div>
-    <img src="./assets/logo_p6.png" alt="icone">
-  </div>
-  <nav class="header-nav" >
-    <a *ngIf="api.isLoggedIn()" mat-button routerLink="/posts">Articles</a>
-    <a *ngIf="api.isLoggedIn()" mat-button routerLink="/subjects">Thèmes</a>
-
-    <button *ngIf="api.isLoggedIn()" mat-button (click)="logout()">
-      Se déconnecter
-    </button>
-    <a *ngIf="!api.isLoggedIn()" routerLink="/login">Connexion</a>
-
-    <a
-      *ngIf="!api.isLoggedIn()"
-      mat-button
-      routerLink="/login"
-    >Se connecter</a>
-    <a
-      *ngIf="!api.isLoggedIn()"
-      mat-button
-      routerLink="/register"
-    >S’inscrire</a>
+  <div class="header-container">
+    <div class="logo-container">
+      <img src="./assets/logo_p6.png" alt="icone">
+    </div>
 
     <button
-      *ngIf="api.isLoggedIn()"
+      class="burger-menu"
+      [class.active]="isMobileMenuOpen"
+      (click)="toggleMobileMenu()"
       mat-icon-button
-      routerLink="/profil"
     >
-      <mat-icon>account_circle</mat-icon>
+      <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
+
+    <nav class="desktop-nav">
+      <a *ngIf="api.isLoggedIn()" mat-button routerLink="/posts">Articles</a>
+      <a *ngIf="api.isLoggedIn()" mat-button routerLink="/themes">Thèmes</a>
+
+      <button *ngIf="api.isLoggedIn()" mat-button (click)="logout()">
+        Se déconnecter
+      </button>
+
+      <a *ngIf="!api.isLoggedIn()" mat-button routerLink="/login">Se connecter</a>
+      <a *ngIf="!api.isLoggedIn()" mat-button routerLink="/register">S'inscrire</a>
+
+      <button
+        *ngIf="api.isLoggedIn()"
+        mat-icon-button
+        routerLink="/profil"
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </nav>
+  </div>
+
+  <nav class="mobile-nav" [class.open]="isMobileMenuOpen">
+    <div class="mobile-nav-content">
+      <a *ngIf="api.isLoggedIn()"
+         mat-button
+         routerLink="/posts"
+         (click)="closeMobileMenu()">
+        Articles
+      </a>
+      <a *ngIf="api.isLoggedIn()"
+         mat-button
+         routerLink="/themes"
+         (click)="closeMobileMenu()">
+        Thèmes
+      </a>
+
+      <button *ngIf="api.isLoggedIn()"
+              mat-button
+              (click)="logout(); closeMobileMenu()">
+        Se déconnecter
+      </button>
+
+      <a *ngIf="!api.isLoggedIn()"
+         mat-button
+         routerLink="/login"
+         (click)="closeMobileMenu()">
+        Se connecter
+      </a>
+      <a *ngIf="!api.isLoggedIn()"
+         mat-button
+         routerLink="/register"
+         (click)="closeMobileMenu()">
+        S'inscrire
+      </a>
+
+      <button
+        *ngIf="api.isLoggedIn()"
+        mat-icon-button
+        routerLink="/profil"
+        (click)="closeMobileMenu()"
+      >
+        <mat-icon>account_circle</mat-icon>
+        <span>Profil</span>
+      </button>
+    </div>
   </nav>
 </header>

@@ -13,17 +13,18 @@ import {ApiService} from "../../services/api.service";
 import {PostDto} from "../../models/PostDto";
 import {CommentaireDto} from "../../models/CommentaireDto";
 import { forkJoin } from 'rxjs';
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss'],
-  imports: [
-    RouterLink, AsyncPipe, DatePipe, NgIf, NgFor,
-    ReactiveFormsModule,
-    MatCardModule, MatButtonModule, MatIconModule, MatInputModule, MatDividerModule, MatProgressSpinnerModule, SlicePipe
-  ],
+    imports: [
+        RouterLink, AsyncPipe, DatePipe, NgIf, NgFor,
+        ReactiveFormsModule,
+        MatCardModule, MatButtonModule, MatIconModule, MatInputModule, MatDividerModule, MatProgressSpinnerModule, SlicePipe, HeaderComponent
+    ],
 })
 export class PostDetailComponent {
   private route = inject(ActivatedRoute);
