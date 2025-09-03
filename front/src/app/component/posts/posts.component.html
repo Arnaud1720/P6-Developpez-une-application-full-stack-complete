@@ -12,6 +12,7 @@
     </button>
   </div>
 
+  <!-- Grille de posts -->
   <div class="posts-grid">
     <mat-card
       *ngFor="let post of posts"
@@ -30,7 +31,7 @@
 
       <mat-card-actions class="post-meta" (click)="$event.stopPropagation()">
         <span>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
-        <span>Auteur {{ post.userId }}</span>
+        <span>Auteur : {{ post.authorPseudo || '—' }}</span>
       </mat-card-actions>
 
 <!--      <div class="subscribe-btn" (click)="$event.stopPropagation()">-->

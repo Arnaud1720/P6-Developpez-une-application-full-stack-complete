@@ -21,5 +21,7 @@ public class PostDto {
     private int userId;
     @Schema(description="SubjectUser", example="1",nullable = true)
     private int subjectId;
+    private String authorPseudo;
+
 
 }

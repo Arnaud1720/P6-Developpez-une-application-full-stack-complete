@@ -59,10 +59,6 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  /**
-   * Retourne la subscription correspondante à ce post, ou undefined si non abonné.
-   */
-
 
   /**
    * Abonne l'utilisateur à ce post.

@@ -1,10 +1,13 @@
+
 export interface PostDto {
   id: number;
   title: string;
   content: string;
-  createdAt: string;    // ISO date reçue du back
+  createdAt: string;
   userId: number;
   subjectId: number;
   authorName: string;
   postId?:number
+  authorId?: number;
+  authorPseudo?: string;
 }

@@ -15,6 +15,7 @@ export class CreatePostComponent implements OnInit {
   registerForm!: FormGroup;
   hide = true;
 
+
   constructor( private api: ApiService,
                private router: Router,
                private snackBar: MatSnackBar,
