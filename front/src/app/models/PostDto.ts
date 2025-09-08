@@ -10,4 +10,7 @@ export interface PostDto {
   postId?:number
   authorId?: number;
   authorPseudo?: string;
+  auteurUsername: string;
+  topicName: string;
+
 }

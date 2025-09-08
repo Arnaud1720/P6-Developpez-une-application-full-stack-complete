@@ -7,7 +7,7 @@
     </button>
 
     <button mat-button (click)="toggleOrder()" class="sort-button">
-      Trier par
+      Trier par date
       <mat-icon>{{ asc ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
     </button>
   </div>
@@ -33,25 +33,6 @@
         <span>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
         <span>Auteur : {{ post.authorPseudo || '—' }}</span>
       </mat-card-actions>
-
-<!--      <div class="subscribe-btn" (click)="$event.stopPropagation()">-->
-<!--        <button-->
-<!--          mat-stroked-button-->
-<!--          color="primary"-->
-<!--          *ngIf="!isSubscribedTo(post)"-->
-<!--          (click)="subscribeTo(post)"-->
-<!--        >-->
-<!--          S’abonner-->
-<!--        </button>-->
-<!--        <button-->
-<!--          mat-stroked-button-->
-<!--          color="warn"-->
-<!--          *ngIf="isSubscribedTo(post)"-->
-<!--          (click)="unsubscribeFrom(post)"-->
-<!--        >-->
-<!--          Se désabonner-->
-<!--        </button>-->
-<!--      </div>-->
     </mat-card>
   </div>
 

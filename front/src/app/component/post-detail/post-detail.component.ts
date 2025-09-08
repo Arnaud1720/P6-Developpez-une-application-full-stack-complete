@@ -73,4 +73,8 @@ export class PostDetailComponent {
       complete: () => this.sending = false,
     });
   }
+
+  trackById(index: number, c: { id: number }) {
+    return c.id;
+  }
 }

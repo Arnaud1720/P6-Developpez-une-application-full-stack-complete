@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subscription} from "rxjs";
-import {SubjectDto} from "../models/SubjectDto";
 import {UserDto} from "../models/UserDto";
 import {LoginResponse} from "../models/LoginResponse";
 import {PostDto} from "../models/PostDto";
@@ -24,10 +23,6 @@ export class ApiService {
 
   }
 
-  // ----- Topics -----
-  getSubjects(): Observable<SubjectDto[]> {
-    return this.http.get<SubjectDto[]>(`${this.baseUrl}/subjects`);
-  }
 
   login(usernameOrEmail: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(

@@ -9,11 +9,9 @@
     <mat-card-header>
       <mat-card-title>{{ post.title }}</mat-card-title>
       <mat-card-subtitle>
-        <span class="meta">
-          {{ post.createdAt | date:'dd/MM/yyyy' }}
-          <!-- adapte si tu as username -->
-          · Auteur {{ post.userId }}
-        </span>
+        {{ post.createdAt | date:'dd/MM/yyyy' }} ·
+        Auteur {{ post.auteurUsername }} ·
+        Topic {{ post.topicName }}
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -24,16 +22,20 @@
       <h3>Commentaires</h3>
 
       <div class="comments">
-        <div *ngFor="let c of comments" class="comment">
-          <div class="avatar">{{ (c.auteurUsername || 'U') | slice:0:1 }}</div>
+        <div *ngFor="let c of comments; trackBy: trackById" class="comment">
+          <div class="avatar" [attr.aria-label]="c.auteurUsername">
+            {{ (c.auteurUsername || 'U') | slice:0:1 }}
+          </div>
+
           <div class="bubble">
             <div class="who">
-              <b>{{ c.auteurUsername || ('Auteur ' + (c.auteurId || '')) }}</b>
+              <span class="name">{{ c.auteurUsername || 'Utilisateur' }}</span>
               <span class="date">{{ c.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
             </div>
             <div class="text">{{ c.contenu }}</div>
           </div>
         </div>
+
         <div *ngIf="!comments.length" class="empty">Aucun commentaire pour l’instant.</div>
       </div>
 
