@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mdd_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mdd_db
+      MYSQL_USER: mdd_user
+      MYSQL_PASSWORD: mdd_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mdd_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "8083:80"
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:

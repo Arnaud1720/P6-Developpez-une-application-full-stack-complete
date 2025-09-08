@@ -28,7 +28,6 @@ public class Commentaire {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
     private User auteur;
 }

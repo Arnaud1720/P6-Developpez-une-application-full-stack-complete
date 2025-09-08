@@ -32,27 +32,11 @@ public class PostServiceImpl implements PostService {
     public PostDto create(PostCreation dto, Integer userId) {
         User author = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
-//TODO décom peut-être
-
-//        Subjects subject = null;
-//        if (dto.getSubjectId() != null) {
-//            subject = subjectRepository.findById(dto.getSubjectId()).orElse(null);
-//        } else if (dto.getSubjectData() != null) {
-//            // créer un nouveau sujet
-//            subject = Subjects.builder()
-//                    .name(dto.getSubjectData().getName())
-//                    .description(dto.getSubjectData().getDescription())
-//                    .build();
-//            subject = subjectRepository.save(subject);
-//        }
-        // ici subject peut rester null
-
         Post post = Post.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .createdAt(LocalDateTime.now())
                 .userid(author)
-//                .subject(subject)   // null autorisé
                 .build();
 
         return postMapper.toDto(postRepository.save(post));
