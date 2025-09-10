@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/api/topics/create",
+                                "api/user/update/profil",
                                 "api/user/save"
                         )
                         .permitAll()

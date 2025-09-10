@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.ProfilDto;
+import com.openclassrooms.mddapi.dto.UpdateProfileDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.service.UserService;
 import com.openclassrooms.mddapi.service.impl.UserPrincipal;
@@ -51,27 +52,23 @@ public class UserController {
     }
 
 
-    /**
-     * PUT /api/users/update/profil
-     * Met à jour le profil de l’utilisateur connecté
-     */
     @PutMapping("/update/profil")
     public ResponseEntity<UserDto> updateProfil(
-            @Valid @RequestBody UserDto incomingDto
+            @Valid @RequestBody UpdateProfileDto updateDto,
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
-        // 1. Récupère l’ID du principal
-        UserPrincipal principal = (UserPrincipal)
-                SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getPrincipal();
-        Integer myId = principal.getUser().getId();
+        // Sécurité : forcer l'ID de l'utilisateur connecté
+        Integer userId = principal.getUser().getId();
 
-        // 2. Force l’ID sur le DTO
-        incomingDto.setId(myId);
+        // Convertir UpdateProfileDto en UserDto pour votre méthode existante
+        UserDto userDto = new UserDto();
+        userDto.setEmail(updateDto.getEmail());
+        userDto.setPassword(updateDto.getPassword());
+        userDto.setUsername(updateDto.getUsername());
+        // Ajouter d'autres champs si nécessaire
 
-        // 3. Appelle la bonne signature updateProfile(userId, dto)
-        UserDto updated = userService.updateProfile(myId, incomingDto);
-
+        // Appeler votre méthode existante
+        UserDto updated = userService.updateProfile(userId, userDto);
         return ResponseEntity.ok(updated);
     }
 

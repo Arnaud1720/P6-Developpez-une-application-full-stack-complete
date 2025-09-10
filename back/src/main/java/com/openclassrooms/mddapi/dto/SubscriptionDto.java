@@ -23,6 +23,12 @@ public class SubscriptionDto {
     @Schema(description = "ID du thème concerné", example = "42")
     private Integer themeId;
 
+    @Schema(description = "Nom du thème", example = "JavaScript")
+    private String themeName;
+
+    @Schema(description = "Description du thème", example = "Lorem ipsum...")
+    private String themeDescription;
+
     @Schema(description = "Horodatage de l'abonnement")
     private LocalDateTime subscribedAt;
 

@@ -9,9 +9,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SubscriptionMapper {
 
+
     // entity -> dto
     @Mapping(target = "userId",  source = "user.id")
     @Mapping(target = "themeId", source = "theme.id")
+    @Mapping(target = "themeName", source = "theme.title")
+    @Mapping(target = "themeDescription", source = "theme.content")
     SubscriptionDto toDto(Subscription subscription);
 
     @Mapping(target = "user",  ignore = true)

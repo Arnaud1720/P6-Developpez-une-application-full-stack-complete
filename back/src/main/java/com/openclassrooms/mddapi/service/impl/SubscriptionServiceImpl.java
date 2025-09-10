@@ -31,7 +31,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         this.themeRepository = themeRepository;
     }
 
-
     @Override
     public SubscriptionDto addSubscription(SubscriptionDto subscriptionDto) {
         // 1. Charger User et Theme ou lever 404
@@ -55,6 +54,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         // 3. Retourner le DTO de sortie (via MapStruct ou équivalent)
         return subscriptionMapper.toDto(saved);
     }
+
     @Override
     public void removeSubscription(Integer subscriptionId) {
         if (!subscriptionRepository.existsById(subscriptionId)) {
@@ -65,9 +65,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<SubscriptionDto> findByUserId(Integer userId) {
-        List<Subscription> subscriptions = subscriptionRepository.findAllByUserId(userId);
+        // Utiliser la méthode avec fetch EAGER pour charger les thèmes
+        List<Subscription> subscriptions = subscriptionRepository.findActiveSubscriptionsByUserId(userId);
 
-        // 2️⃣ Mappe chaque Subscription (entité) en SubscriptionDto (DTO)
+        // Si vous voulez toutes les subscriptions (actives et inactives), utilisez :
+        // List<Subscription> subscriptions = subscriptionRepository.findAllByUserIdWithTheme(userId);
+
+        // Mapper chaque Subscription (entité) en SubscriptionDto (DTO)
         return subscriptions.stream()
                 .map(subscriptionMapper::toDto)
                 .toList();
