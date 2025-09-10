@@ -28,6 +28,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {PostDetailComponent} from "./component/post-detail/post-detail.component";
 import { ThemesComponent } from './component/themes/themes.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -40,32 +41,33 @@ import { ThemesComponent } from './component/themes/themes.component';
     CreatePostComponent,
     ThemesComponent
   ],
-  imports: [
-    BrowserModule,            // inclut CommonModule
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    MatGridListModule,
-    RouterModule,
-    HeaderComponent,
-    MatListModule,
-    MatExpansionModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    PostDetailComponent,
+    imports: [
+        BrowserModule,            // inclut CommonModule
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatIconModule,
+        MatInputModule,
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        MatGridListModule,
+        RouterModule,
+        HeaderComponent,
+        MatListModule,
+        MatExpansionModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatListModule,
+        PostDetailComponent,
+        MatDialogModule,
 
-  ],
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

@@ -8,6 +8,7 @@ import {ProfilDto} from "../models/ProfilDto";
 import {SubscriptionDto} from "../models/SubscriptionDto";
 import {CommentaireDto} from "../models/CommentaireDto";
 import {ThemeDto} from "../models/ThemeDto";
+import {UpdateProfileDto} from "../models/UpdateProfileDto";
 
 
 @Injectable({
@@ -75,13 +76,13 @@ export class ApiService {
   clearToken(): void {
     localStorage.removeItem(this.TOKEN_KEY);
   }
-  updateProfil(dto: UserDto): Observable<UserDto> {
+  /** Met à jour le profil avec UpdateProfileDto */
+  updateProfil(dto: UpdateProfileDto): Observable<UserDto> {
     return this.http.put<UserDto>(
       `${this.baseUrl}/user/update/profil`,
       dto
     );
   }
-
   addSubscription(subscriptionDto: SubscriptionDto): Observable<SubscriptionDto> {
     return this.http.post<SubscriptionDto>(
       `${this.baseUrl}/subscriptions/subscribe`,
@@ -106,13 +107,6 @@ export class ApiService {
     }
   }
 
-  // // appel de la fonction subscribe depuis api.service.ts
-  // /** Supprime une souscription par son ID */
-  // removeSubscription(id: number): Observable<void> {
-  //   return this.http.delete<void>(
-  //     `${this.baseUrl}/subscriptions/${id}`
-  //   );
-  // }
 
   getPost(id: number) {
     return this.http.get<PostDto>(`${this.baseUrl}/post/${id}`); // <-- baseUrl
