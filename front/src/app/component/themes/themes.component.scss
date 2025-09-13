@@ -23,7 +23,7 @@
 /* Carré rouge: grille responsive */
 .posts-grid {
   display: grid;
-  gap: 1rem;
+  gap: 3rem;
   /* 1 colonne mobile, 2 tablettes, 3+ desktop */
   grid-template-columns: 1fr;
 
@@ -61,4 +61,9 @@
   color: #b00020;
   text-align: center;
   margin: 2rem 0;
+}
+.already-subscribed {
+  opacity: 0.9;
+  cursor: default;
+  mat-icon { margin-right: .25rem; vertical-align: middle; }
 }

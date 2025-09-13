@@ -9,11 +9,13 @@ import org.mapstruct.Mapping;
 public interface PostMapper {
     @Mapping(target = "userId",       source = "userid.id")
     @Mapping(target = "authorPseudo", source = "userid.username")
-        // Ajoute ces deux lignes si l'entité Post a la relation topic/subject
-        // @Mapping(target = "subjectId",   source = "subject.id")
-        // @Mapping(target = "subjectName", source = "subject.name")
+    // AJOUT des mappings pour le thème - utiliser subjectName si topicName n'existe pas
+    @Mapping(target = "subjectId",   source = "theme.id")
+    @Mapping(target = "subjectName", source = "theme.title")
     PostDto toDto(Post post);
 
     @Mapping(target = "userid.id", source = "userId")
+    // AJOUT du mapping pour le thème
+    @Mapping(target = "theme.id", source = "subjectId")
     Post toEntity(PostDto dto);
 }

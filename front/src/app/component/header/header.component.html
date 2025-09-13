@@ -34,48 +34,61 @@
     </nav>
   </div>
 
+  <!-- Overlay pour fermer le menu en cliquant à côté -->
+  <div
+    class="mobile-nav-overlay"
+    [class.open]="isMobileMenuOpen"
+    (click)="closeMobileMenu()">
+  </div>
+
   <nav class="mobile-nav" [class.open]="isMobileMenuOpen">
     <div class="mobile-nav-content">
-      <a *ngIf="api.isLoggedIn()"
-         mat-button
-         routerLink="/posts"
-         (click)="closeMobileMenu()">
-        Articles
-      </a>
-      <a *ngIf="api.isLoggedIn()"
-         mat-button
-         routerLink="/themes"
-         (click)="closeMobileMenu()">
-        Thèmes
-      </a>
-      <button *ngIf="api.isLoggedIn()"
-              mat-button
-              (click)="logout(); closeMobileMenu()">
-        Se déconnecter
-      </button>
+      <!-- Menu items connecté -->
+      <div class="menu-items" *ngIf="api.isLoggedIn()">
+        <button
+          class="disconnect-button"
+          mat-button
+          (click)="logout(); closeMobileMenu()">
+          Se déconnecter
+        </button>
 
-      <a *ngIf="!api.isLoggedIn()"
-         mat-button
-         routerLink="/login"
-         (click)="closeMobileMenu()">
-        Se connecter
-      </a>
-      <a *ngIf="!api.isLoggedIn()"
-         mat-button
-         routerLink="/register"
-         (click)="closeMobileMenu()">
-        S'inscrire
-      </a>
+        <a mat-button
+           routerLink="/posts"
+           (click)="closeMobileMenu()">
+          Articles
+        </a>
 
-      <button
-        *ngIf="api.isLoggedIn()"
-        mat-icon-button
-        routerLink="/profil"
-        (click)="closeMobileMenu()"
-      >
-        <mat-icon>account_circle</mat-icon>
-        <span>Profil</span>
-      </button>
+        <a mat-button
+           routerLink="/themes"
+           (click)="closeMobileMenu()">
+          Thèmes
+        </a>
+      </div>
+
+      <!-- Menu items non connecté -->
+      <div class="menu-items" *ngIf="!api.isLoggedIn()">
+        <a mat-button
+           routerLink="/login"
+           (click)="closeMobileMenu()">
+          Se connecter
+        </a>
+        <a mat-button
+           routerLink="/register"
+           (click)="closeMobileMenu()">
+          S'inscrire
+        </a>
+      </div>
+
+      <!-- Icône profil en bas -->
+      <div class="bottom-items" *ngIf="api.isLoggedIn()">
+        <a
+          class="profile-button"
+          routerLink="/profil"
+          (click)="closeMobileMenu()"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </a>
+      </div>
     </div>
   </nav>
 </header>

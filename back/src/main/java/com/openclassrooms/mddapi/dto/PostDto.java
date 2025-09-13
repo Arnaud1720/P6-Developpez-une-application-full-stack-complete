@@ -18,4 +18,5 @@ public class PostDto {
     private int subjectId;
     private String authorPseudo;
     private String subjectName;
+    private String topicName;
 }

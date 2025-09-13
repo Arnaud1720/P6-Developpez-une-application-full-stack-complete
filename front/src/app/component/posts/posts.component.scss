@@ -23,16 +23,17 @@
 /* Carré rouge: grille responsive */
 .posts-grid {
   display: grid;
-  gap: 1rem;
+  gap: 4rem; /* Augmenté pour mobile */
   /* 1 colonne mobile, 2 tablettes, 3+ desktop */
   grid-template-columns: 1fr;
 
   @media (min-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2rem; /* Gap intermédiaire pour tablettes */
   }
   @media (min-width: 960px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 70px;
+    gap: 5rem;
   }
 }
 

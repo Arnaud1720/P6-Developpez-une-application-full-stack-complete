@@ -31,6 +31,7 @@ export class HeaderComponent {
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
 
+    // Empêcher le scroll du body quand le menu est ouvert
     if (this.isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -46,6 +47,7 @@ export class HeaderComponent {
   logout(): void {
     this.api.clearToken();
     this.router.navigate(['/']);
+    this.closeMobileMenu();
   }
 
   onResize(): void {

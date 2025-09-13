@@ -37,13 +37,16 @@
           [disabled]="busyThemeIds.has(theme.id)">
           S’abonner
         </button>
+
+        <!-- Déjà abonné : simple indicateur non cliquable -->
         <button
           mat-stroked-button
-          color="warn"
+          disabled
           *ngIf="isSubscribedTo(theme)"
-          (click)="unsubscribeFrom(theme)"
-          [disabled]="busyThemeIds.has(theme.id)">
-          Se désabonner
+          class="already-subscribed"
+          aria-label="Déjà abonné">
+          <mat-icon>check_circle</mat-icon>
+          Déjà abonné
         </button>
       </div>
     </mat-card>
